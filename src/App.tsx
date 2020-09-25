@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import './App.scss';
+import ProductList from './components/products/ProductList';
+interface Product {
+  id: number;
+  name: string;
+  image?: string;
+}
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface IProps {}
+interface IState {
+  name: string;
+  products: Product[];
+  myProduct: any[];
+}
+class App extends Component<IProps, IState> {
+  constructor(props: IProps){
+    super(props);
+    this.state = {
+      name: 'Tuong',
+      products: [{id: 1, name: 'product 1'}],
+      myProduct: [{name: 'myname'}]
+    }
+  }
+  render() {
+
+    return (
+      <div className="App">
+        <h2>Hello React {this.state.name}</h2>
+        <ProductList products={this.state.myProduct} />
+      </div>
+    );
+  }
 }
 
 export default App;
