@@ -10,10 +10,11 @@ interface IProduct {
 }
 
 interface IProps {
-    product: IProduct;
+    // product: IProduct;
 }
 
-const ProductItem: React.FC<IProps> = ({ product }) => {
+const ProductDetail: React.FC<IProps> = () => {
+    const product = { id: 1, name: 'gaegaweg', price: 2000, image: 'gawega' }
     return (
         <div className="col-4 mt-4" key={product.id}>
             <div className="card">
@@ -36,4 +37,4 @@ const ProductItem: React.FC<IProps> = ({ product }) => {
     );
 }
 
-export default ProductItem;
+export default ProductDetail;
