@@ -8,9 +8,10 @@ const epicMiddleware = createEpicMiddleware();
 
 export const configureStore = () => {
     const middlewares: any = [epicMiddleware];
-    if (process.env.NODE_ENV === 'development') {
-        middlewares.push(createLogger());
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //     middlewares.push(createLogger());
+    // }
+    middlewares.push(createLogger());
     const store = createStore(rootReducer, compose(applyMiddleware(...middlewares)));
 
     epicMiddleware.run(rootEpic);

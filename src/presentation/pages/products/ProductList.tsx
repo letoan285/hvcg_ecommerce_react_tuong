@@ -1,9 +1,12 @@
 import Axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProductDetail from './ProductDetail';
 import ProductItem from '../../../components/products/ProductItem';
+import { bindActionCreators } from 'redux';
+import { getProducts } from '../../redux/actions/products';
+import { getCategories } from '../../redux/actions/categories';
 
 interface ICategory {
     id: number;
@@ -21,22 +24,19 @@ interface IProduct {
     description?: string;
     image?: string;
 }
+interface IProps {
+    propsData: any;
+    getProducts: () => void;
+    getCategories: () => void;
+    categories: any;
 
-const ProductList = () => {
+}
+const ProductList: React.FC<IProps> = ({propsData, categories, getCategories: handleGetCategories, getProducts: handleGetProducts}) => {
 
-    const defaultCategories = [
-        { id: 1, name: 'Apple' },
-        { id: 2, name: 'Samsung' }
-    ];
 
-    const productDefault: IProduct[] = [
-        { id: 1, name: 'iphone 5', price: 2300, category_id: 1, image: 'https://duchungmobile.vn/wp-content/uploads/2016/03/5-den.jpg' },
-        { id: 2, name: 'Samsung galaxy', price: 1300, category_id: 2, image: 'https://hc.com.vn/i/ecommerce/media/GS.003291_FEATURE_55789.jpg' },
-        { id: 3, name: 'Ipad 5', price: 4500, category_id: 1, image: 'https://dienthoaihay.vn/images/products/2020/06/23/large/ipad-2-xam_1592899330.jpg' }
-    ];
 
-    const [categories, setCategories] = useState<ICategory[]>(defaultCategories);
-    const [products, setProducts] = useState<IProduct[]>(productDefault);
+    // const [categories, setCategories] = useState<ICategory[]>([]);
+    const [products, setProducts] = useState<IProduct[]>([]);
 
     const changeParentTitle = (productName: string) => {
         // changeTitle(productName);
@@ -54,9 +54,15 @@ const ProductList = () => {
 
     }
 
+    
+    useEffect(() => {
+        handleGetProducts();
+        handleGetCategories();
+    }, []);
 
-
-
+    if(!propsData.data || !categories.data){
+        return <>Loading...</>
+    }
 
     return (
         <div className="container">
@@ -70,7 +76,7 @@ const ProductList = () => {
                     <ul className="list-group mt-4">
                         <li className="list-group-item active">Category</li>
                         {
-                            categories.map((item: ICategory) => {
+                            categories.data.categories.map((item: ICategory) => {
                                 return (
                                     <li className="list-group-item" key={item.id}>
                                         <Link to={`/categories/${item.id}`}>{item.name}</Link>
@@ -86,7 +92,7 @@ const ProductList = () => {
                     <div className="row">
 
                         {
-                            products.map((item: IProduct) => {
+                            propsData.data.products.map((item: IProduct) => {
                                 return <ProductItem product={item} key={item.id} />;
                             })
                         }
@@ -101,21 +107,19 @@ const ProductList = () => {
 
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         propsData: state.product,
-//         productList: state.productReducer,
-//         categoryList: state.categoryReducer
-//     }
-// }
+const mapStateToProps = (state: any) => {
+    return {
+        propsData: state.productsReducer,
+        categories: state.categoryReducer
+    }
+}
 
-// const mapDispatchToProps = (dispatch) => bindActionCreators(
-//     {
-//         getOne,
-//         getProductsApi,
-//         getCategoriesApi
-//     },
-//     dispatch
-// )
+const mapDispatchToProps = (dispatch: any) => bindActionCreators(
+    {
+        getProducts,
+        getCategories
+    },
+    dispatch
+)
 
-export default ProductList;
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

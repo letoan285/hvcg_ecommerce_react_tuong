@@ -1,14 +1,11 @@
-import { ofType } from "redux-observable";
-import { ProductActionTypes } from '../actions/products';
+import { combineEpics, ofType } from "redux-observable";
+import { ProductActionTypes, getProductsSuccess, getProductsFail } from '../actions/products';
 import { exhaustMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import Axios from "axios";
+import { categoriesEpic } from './categories';
+import { productsEpic, productEpic } from './products';
+import { usersEpic } from './users';
 
-export const rootEpic = (action$: any, state$: any) => action$.pipe(
-    ofType(ProductActionTypes.GET_PRODUCTS),
-    exhaustMap(action => {
-        return new Observable((obs) => {
-            obs.next();
-            obs.complete();
-        });
-    })
-);
+
+export const rootEpic = combineEpics(categoriesEpic, productsEpic, productEpic, usersEpic);
