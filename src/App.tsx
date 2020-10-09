@@ -6,11 +6,10 @@ import HomePage from './presentation/pages/home/HomePage';
 import ProductDetail from './presentation/pages/products/ProductDetail';
 import DefaultLayout from './components/layouts/DefaultLayout';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { configureStore } from './presentation/redux/store';
 
-const rootReducer = () => { }
 
-const store = createStore(rootReducer);
+const store = configureStore();
 
 interface Product {
   id: number;
