@@ -4,7 +4,7 @@ import ProductList from './presentation/pages/products/ProductList';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from './presentation/pages/home/HomePage';
 import ProductDetail from './presentation/pages/products/ProductDetail';
-import DefaultLayout from './components/layouts/DefaultLayout';
+import DefaultLayout from './presentation/components/layouts/DefaultLayout';
 import { Provider } from 'react-redux';
 import { configureStore } from './presentation/redux/store';
 
