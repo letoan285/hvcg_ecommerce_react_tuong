@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProductDetail from './ProductDetail';
-import ProductItem from '../../../components/products/ProductItem';
+import ProductItem from '../../components/products/ProductItem';
 import { bindActionCreators } from 'redux';
 import { getProducts } from '../../redux/actions/products';
 import { getCategories } from '../../redux/actions/categories';
