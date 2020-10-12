@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import ContactUs from '../../presentation/pages/contact/ContactUs';
-import HomePage from '../../presentation/pages/home/HomePage';
-import ProductDetail from '../../presentation/pages/products/ProductDetail';
-import ProductList from '../../presentation/pages/products/ProductList';
+import ContactUs from '../../pages/contact/ContactUs';
+import HomePage from '../../pages/home/HomePage';
+import ProductDetail from '../../pages/products/ProductDetail';
+import ProductList from '../../pages/products/ProductList';
 import Header from '../header/Header';
-import routes from '../../presentation/router/router';
+import routes from '../../router/router';
 
 const loading = () => <div>Loading...</div>;
 

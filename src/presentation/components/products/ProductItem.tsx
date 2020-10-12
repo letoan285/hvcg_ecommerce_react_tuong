@@ -14,6 +14,7 @@ interface IProps {
 }
 
 const ProductItem: React.FC<IProps> = ({ product }) => {
+
     return (
         <div className="col-4 mt-4" key={product.id}>
             <div className="card">
