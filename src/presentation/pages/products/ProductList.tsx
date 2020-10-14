@@ -59,7 +59,6 @@ const ProductList: React.FC<IProps> = ({propsData, categories, getCategories: ha
         handleGetProducts();
         handleGetCategories();
     }, []);
-
     if(!propsData.data || !categories.data){
         return <>Loading...</>
     }
@@ -92,7 +91,7 @@ const ProductList: React.FC<IProps> = ({propsData, categories, getCategories: ha
                     <div className="row">
 
                         {
-                            propsData.data.products.map((item: IProduct) => {
+                            propsData.data.products.data.map((item: IProduct) => {
                                 return <ProductItem product={item} key={item.id} />;
                             })
                         }

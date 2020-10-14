@@ -10,7 +10,6 @@ export const productsReducer = (state = initialState, action: any) => {
 
     switch(action.type){
         case ProductActionTypes.GET_PRODUCTS_SUCCESS: {
-            debugger
             return {
                 ...state,
                 data: {
