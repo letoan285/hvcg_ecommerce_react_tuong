@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import './App.scss';
 import ProductList from './presentation/pages/products/ProductList';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from './presentation/pages/home/HomePage';
 import ProductDetail from './presentation/pages/products/ProductDetail';
 import DefaultLayout from './presentation/components/layouts/DefaultLayout';
-import { Provider } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import { configureStore } from './presentation/redux/store';
-
-
-const store = configureStore();
+import { bindActionCreators } from 'redux';
+import { initApplication } from './presentation/redux/actions/general/appInitiation';
+import Routes from './Routes';
 
 interface Product {
   id: number;
@@ -17,36 +17,42 @@ interface Product {
   image?: string;
 }
 
-interface IProps { }
+interface IProps {
+  initApplication: () => void;
+  propsData: any;
+}
 interface IState {
   name: string;
   products: Product[];
   myProduct: any[];
 }
-class App extends Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      name: 'Tuong',
-      products: [{ id: 1, name: 'product 1' }],
-      myProduct: [{ name: 'myname' }]
-    }
-  }
-  render() {
+const App: React.FC<IProps> = ({initApplication: handleInitApplication, propsData}) => {
+
+useEffect(() => {
+  handleInitApplication();
+}, [propsData])
 
     return (
-      <Provider store={store}>
-
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/login" render={() => <h1>Login</h1>} />
-            <Route exact path="/register" render={() => <h1>Register</h1>} />
-            <Route path="/" render={(props) => <DefaultLayout {...props} />} />
-          </Switch>
-        </BrowserRouter>
-      </Provider>
+  
+        <Routes />
+      
     );
+  }
+
+
+
+const mapStateToProps = (state: any) => {
+  return {
+      propsData: state.productsReducer,
+      categories: state.categoryReducer
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch: any) => bindActionCreators(
+  {
+    initApplication
+  },
+  dispatch
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

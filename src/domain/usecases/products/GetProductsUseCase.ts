@@ -17,6 +17,7 @@ export default class GetProductsUseCase implements IUseCase {
         return new Promise((resolve, reject) => {
             if(this.validate()){
                 this.productRepository.getAll().then((res) => {
+
                     resolve(res)
                 })
             } else {

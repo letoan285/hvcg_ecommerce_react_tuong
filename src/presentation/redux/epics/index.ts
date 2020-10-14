@@ -6,6 +6,7 @@ import Axios from "axios";
 import { categoriesEpic } from './categories';
 import { productsEpic, productEpic } from './products';
 import { usersEpic } from './users';
+import { initAppEpic } from "./general/appInitiation";
 
 
-export const rootEpic = combineEpics(categoriesEpic, productsEpic, productEpic, usersEpic);
+export const rootEpic = combineEpics(initAppEpic, categoriesEpic, productsEpic, productEpic, usersEpic);
